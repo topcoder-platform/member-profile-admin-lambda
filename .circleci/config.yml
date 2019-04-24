@@ -11,15 +11,15 @@ installation_dependency: &installation_dependency
         #installing awscli
         sudo pip install awscli --upgrade
         #install serverless
-        sudo npm install -g try-thread-sleep
-        sudo npm install -g serverless --ignore-scripts spawn-sync            
+        npm install -g try-thread-sleep
+        npm install -g serverless --ignore-scripts spawn-sync            
 install_deploysuite: &install_deploysuite
     name: Installation of install_deploysuite.
     command: |
        git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
-        cp ./../buildscript/master_deploy.sh .
-        cp ./../buildscript/buildenv.sh .
-        cp ./../buildscript/awsconfiguration.sh .            
+       cp ./../buildscript/master_deploy.sh .
+       cp ./../buildscript/buildenv.sh .
+       cp ./../buildscript/awsconfiguration.sh .            
 restore_cache: &restore_cache
      key: docker-node-{{ checksum "package-lock.json" }}
 install_npm: &install_npm
