@@ -2,6 +2,7 @@ service: member-profile-admin-lambda
 
 provider:
   name: aws
+  stage: ${opt:stage, 'dev'}
   runtime: nodejs8.10
   role: ${file(./config/${self:provider.stage}.json):LAMBDA_ROLE}
   environment:
