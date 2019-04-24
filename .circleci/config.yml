@@ -11,8 +11,8 @@ installation_dependency: &installation_dependency
         #installing awscli
         sudo pip install awscli --upgrade
         #install serverless
-        npm install -g try-thread-sleep
-        npm install -g serverless --ignore-scripts spawn-sync            
+        sudo npm install -g try-thread-sleep
+        sduo npm install -g serverless --ignore-scripts spawn-sync            
 install_deploysuite: &install_deploysuite
     name: Installation of install_deploysuite.
     command: |
@@ -46,9 +46,9 @@ build_steps: &build_steps
           command: |
              ./awsconfiguration.sh $DEPLOY_ENV
              source awsenvconf
-             ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-member-profile-admin-lambda-deployvar
+             sudo ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-member-profile-admin-lambda-deployvar
              source buildenvvar             
-             ./master_deploy.sh -d LAMBDA -e DEV -s ${LOGICAL_ENV}-member-profile-admin-lambda-appvar
+             sudo ./master_deploy.sh -d LAMBDA -e DEV -s ${LOGICAL_ENV}-member-profile-admin-lambda-appvar
 
 jobs:
   # Build & Deploy against development backend rera212
