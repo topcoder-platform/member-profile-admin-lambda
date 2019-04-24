@@ -1,0 +1,22 @@
+service: member-profile-admin-lambda
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  role: ${file(./config/${self:provider.stage}.json):LAMBDA_ROLE}
+  environment:
+    M2M_AUTH_AUDIENCE: ${file(./config/${self:provider.stage}.json):M2M_AUTH_AUDIENCE}
+    M2M_AUTH_CLIENT_ID: ${file(./config/${self:provider.stage}.json):M2M_AUTH_CLIENT_ID}
+    M2M_AUTH_CLIENT_SECRET: ${file(./config/${self:provider.stage}.json):M2M_AUTH_CLIENT_SECRET}
+    M2M_AUTH_DOMAIN: ${file(./config/${self:provider.stage}.json):M2M_AUTH_DOMAIN}
+    KAFKA_URL: ${file(./config/${self:provider.stage}.json):KAFKA_URL}
+    UPDATE_PROFILE_TOPIC: ${file(./config/${self:provider.stage}.json):UPDATE_PROFILE_TOPIC}
+    ORIGINATOR: ${file(./config/${self:provider.stage}.json):ORIGINATOR}
+
+functions:
+  member:
+    handler: profile.update
+    events:
+     - http:
+         path: profile/update
+         method: get

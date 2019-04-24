@@ -1,0 +1,17 @@
+{
+  "name": "member-profile-admin-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "profile.js",
+  "scripts": {
+    "test": "npm i; node test/test.js"
+  },
+  "author": "Atif Ali Siddiqui",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.440.0",
+    "axios": "^0.18.0",
+    "moment": "^2.24.0",
+    "config": "^3.1.0"
+  }
+}
