@@ -4,68 +4,70 @@ default: &default
     docker:
       - image: circleci/node:8.9.4-stretch
 installation_dependency: &installation_dependency
-        name: Install Serverless and AWS CLI
-        command: |
-            sudo apt-get update -y && sudo apt-get install -qq -y python-pip libpython-dev
-            curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
-            #installing awscli
-            sudo pip install awscli --upgrade
-            #install serverless
-            sudo npm install -g try-thread-sleep
-            sudo npm install -g serverless --ignore-scripts spawn-sync
+    name: Install Serverless and AWS CLI
+    command: |
+        sudo apt-get update -y && sudo apt-get install -qq -y python-pip libpython-dev
+        curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+        #installing awscli
+        sudo pip install awscli --upgrade
+        #install serverless
+        sudo npm install -g try-thread-sleep
+        sudo npm install -g serverless --ignore-scripts spawn-sync            
+install_deploysuite: &install_deploysuite
+    name: Installation of install_deploysuite.
+    command: |
+       git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
+        cp ./../buildscript/master_deploy.sh .
+        cp ./../buildscript/buildenv.sh .
+        cp ./../buildscript/awsconfiguration.sh .            
 restore_cache: &restore_cache
-          key: docker-node-{{ checksum "package-lock.json" }}
+     key: docker-node-{{ checksum "package-lock.json" }}
 install_npm: &install_npm
-          name: Install node_modules
-          command: |
-              npm install
+     name: Install node_modules
+     command: |
+         npm install
 save_cache: &save_cache
-          key: docker-node-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
-    
+     key: docker-node-{{ checksum "package-lock.json" }}
+     paths:
+       - node_modules
+build_steps: &build_steps
+      # Initialization.
+      - checkout
+      - run: *installation_dependency
+      - run: *install_deploysuite
+      # Restoration of node_modules from cache.
+      - restore_cache: *restore_cache      
+      - run: *install_npm
+      # Caching node modules.
+      - save_cache: *save_cache
+      # deploy app
+      - run:
+          name: Deploy via Masterscript v2
+          command: |
+             ./awsconfiguration.sh $DEPLOY_ENV
+             source awsenvconf
+             ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-member-profile-admin-lambda-deployvar
+             source buildenvvar             
+             ./master_deploy.sh -d LAMBDA -e DEV -s ${LOGICAL_ENV}-member-profile-admin-lambda-appvar
 
 jobs:
   # Build & Deploy against development backend rera212
   "build-dev":
     <<: *default
+    environment:
+      DEPLOY_ENV: "DEV"
+      LOGICAL_ENV: "dev"    
       # deploy app
-    steps:
-      # Initialization.
-      - checkout
-      # Restoration of node_modules from cache.
-      - restore_cache: *restore_cache
-      - run: *installation_dependency
-      - run: *install_npm
-      # Caching node modules.
-      - save_cache: *save_cache
-      # deploy app
-      - run:
-          name: Deploy via Masterscript v2
-          command: |
-             git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
-             cp ./../buildscript/master_deploy.sh .
-             ./master_deploy.sh -d LAMBDA -e DEV -s dev-member-profile-admin-lambda
+    steps: *build_steps
+
 
   "build-prod":
     <<: *default
+    environment:
+      DEPLOY_ENV: "PROD"
+      LOGICAL_ENV: "prod"      
       # deploy app
-    steps:
-      # Initialization.
-      - checkout
-      # Restoration of node_modules from cache.
-      - restore_cache: *restore_cache
-      - run: *installation_dependency
-      - run: *install_npm
-      # Caching node modules.
-      - save_cache: *save_cache
-      # deploy app
-      - run:
-          name: Deploy via Masterscript v2
-          command: |
-             git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
-             cp ./../buildscript/master_deploy.sh .
-             ./master_deploy.sh -d LAMBDA -e PROD -s prod-member-profile-admin-lambda
+    steps: *build_steps
 
 workflows:
   version: 2
