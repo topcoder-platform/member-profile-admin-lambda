@@ -48,7 +48,7 @@ build_steps: &build_steps
              source awsenvconf
              ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-member-profile-admin-lambda-deployvar
              source buildenvvar             
-             ./master_deploy.sh -d LAMBDA -e DEV -s ${LOGICAL_ENV}-member-profile-admin-lambda-appvar
+             ./master_deploy.sh -d LAMBDA -e $DEPLOY_ENV -s ${LOGICAL_ENV}-member-profile-admin-lambda-appvar
 
 jobs:
   # Build & Deploy against development backend rera212
