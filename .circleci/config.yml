@@ -12,7 +12,7 @@ installation_dependency: &installation_dependency
         sudo pip install awscli --upgrade
         #install serverless
         sudo npm install -g try-thread-sleep
-        sduo npm install -g serverless --ignore-scripts spawn-sync            
+        sudo npm install -g serverless --ignore-scripts spawn-sync            
 install_deploysuite: &install_deploysuite
     name: Installation of install_deploysuite.
     command: |
