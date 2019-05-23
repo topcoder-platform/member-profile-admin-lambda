@@ -12,12 +12,19 @@ provider:
     M2M_AUTH_DOMAIN: ${file(./config/${self:provider.stage}.json):M2M_AUTH_DOMAIN}
     KAFKA_URL: ${file(./config/${self:provider.stage}.json):KAFKA_URL}
     UPDATE_PROFILE_TOPIC: ${file(./config/${self:provider.stage}.json):UPDATE_PROFILE_TOPIC}
+    UPDATE_PROFILE_TRAIT_TOPIC: ${file(./config/${self:provider.stage}.json):UPDATE_PROFILE_TRAIT_TOPIC}
     ORIGINATOR: ${file(./config/${self:provider.stage}.json):ORIGINATOR}
 
 functions:
-  member:
-    handler: profile.update
+  profile:
+    handler: member.profile
     events:
      - http:
-         path: profile/update
+         path: member/profile
+         method: get
+  profiletraits:
+    handler: member.profiletraits
+    events:
+     - http:
+         path: member/profiletraits
          method: get
