@@ -14,6 +14,7 @@ Add file `./config/dev.json`
       "M2M_AUTH_DOMAIN": "",
       "KAFKA_URL": "",
       "UPDATE_PROFILE_TOPIC": "",
+      "UPDATE_PROFILE_TRAIT_TOPIC": "",
       "ORIGINATOR": "member.profile.admin.lambda",
       "LAMBDA_ROLE": ""
     }
@@ -40,4 +41,4 @@ Using CW tool we can access the clod watch logs in our console.
 ### Local Testing
  When you want to run this locally, just use the following command:
 
-    $ export M2M_AUTH_AUDIENCE=""; export M2M_AUTH_CLIENT_ID=""; export M2M_AUTH_CLIENT_SECRET=""; export M2M_AUTH_DOMAIN=""; export KAFKA_URL=""; export UPDATE_PROFILE_TOPIC=""; export ORIGINATOR="member.profile.admin.lambda"; export AWS_ACCESS_KEY_ID=""; export AWS_SECRET_ACCESS_KEY=""; export AWS_REGION="us-east-1"; npm test;
+    $ export M2M_AUTH_AUDIENCE=""; export M2M_AUTH_CLIENT_ID=""; export M2M_AUTH_CLIENT_SECRET=""; export M2M_AUTH_DOMAIN=""; export KAFKA_URL=""; export UPDATE_PROFILE_TOPIC="member.action.profile.update"; export UPDATE_PROFILE_TRAIT_TOPIC="member.action.profile.trait.update"; export ORIGINATOR="member.profile.admin.lambda"; export AWS_ACCESS_KEY_ID=""; export AWS_SECRET_ACCESS_KEY=""; export AWS_REGION="us-east-1"; npm test;

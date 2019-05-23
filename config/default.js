@@ -8,6 +8,7 @@ module.exports = {
   KAFKA: {
     KAFKA_URL: process.env.KAFKA_URL || "",
     UPDATE_PROFILE_TOPIC: process.env.UPDATE_PROFILE_TOPIC || "",
+    UPDATE_PROFILE_TRAIT_TOPIC: process.env.UPDATE_PROFILE_TRAIT_TOPIC || "",
     ORIGINATOR: process.env.ORIGINATOR || ""
   }
 }

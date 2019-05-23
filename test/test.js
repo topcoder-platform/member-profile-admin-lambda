@@ -1,9 +1,9 @@
 'use strict';
 
-const profile = require('../profile')
+const member = require('../member')
 
 let event = {
-  "path": "/profile/update",
+  "path": "/member/profile",
   "queryStringParameters": {
     "userId": "40154303",
     "handle": "upbeat"
@@ -16,6 +16,10 @@ let event = {
   }
 }
 
-profile.update(event, {}, function (callback, result) {
+// member.profile(event, {}, function (callback, result) {
+//   console.log(result)
+// })
+
+member.profiletraits(event, {}, function (callback, result) {
   console.log(result)
 })
