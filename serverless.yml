@@ -3,7 +3,7 @@ service: member-profile-admin-lambda
 provider:
   name: aws
   stage: ${opt:stage, 'dev'}
-  runtime: nodejs8.10
+  runtime: nodejs12
   role: ${file(./config/${self:provider.stage}.json):LAMBDA_ROLE}
   environment:
     M2M_AUTH_AUDIENCE: ${file(./config/${self:provider.stage}.json):M2M_AUTH_AUDIENCE}
