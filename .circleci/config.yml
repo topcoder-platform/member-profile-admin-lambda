@@ -80,6 +80,7 @@ workflows:
             branches:
               only: 
                 - develop
+                - feature/fixing_build_python_error
       # production builds are executed on "master" branch only.
       - "build-prod":
           context : org-global      
