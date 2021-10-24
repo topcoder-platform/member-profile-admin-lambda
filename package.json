@@ -9,7 +9,7 @@
   "author": "Atif Ali Siddiqui",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.440.0",
+    "aws-sdk": "^2.999.0",
     "axios": "^0.18.0",
     "moment": "^2.24.0",
     "config": "^3.1.0"
